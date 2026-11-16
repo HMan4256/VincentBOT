@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/assets/vincent-banner.svg" alt="Vincent: a little personality, a lot of context" width="100%">
+  <img src="docs/assets/vincent-banner.png" alt="Vincent: a little personality, a lot of context" width="100%">
 </p>
 
 <p align="center">
