@@ -1,0 +1,15 @@
+CREATE TABLE IF NOT EXISTS schema_migrations(version INTEGER PRIMARY KEY, applied_at REAL NOT NULL);
+CREATE TABLE IF NOT EXISTS events(id INTEGER PRIMARY KEY, event_key TEXT NOT NULL UNIQUE, kind TEXT NOT NULL, guild_id TEXT, channel_id TEXT, message_id TEXT, author_id TEXT, occurred_at REAL NOT NULL, ingested_at REAL NOT NULL, payload TEXT NOT NULL);
+CREATE INDEX IF NOT EXISTS events_channel_time ON events(channel_id, occurred_at);
+CREATE TABLE IF NOT EXISTS messages(message_id TEXT PRIMARY KEY, guild_id TEXT NOT NULL, channel_id TEXT NOT NULL, author_id TEXT NOT NULL, content TEXT, reply_to TEXT, created_at REAL NOT NULL, changed_at REAL NOT NULL, deleted INTEGER NOT NULL DEFAULT 0, metadata TEXT NOT NULL DEFAULT '{}');
+CREATE INDEX IF NOT EXISTS messages_channel_time ON messages(channel_id,created_at);
+CREATE TABLE IF NOT EXISTS request_attempts(id INTEGER PRIMARY KEY, request_id TEXT NOT NULL UNIQUE, kind TEXT NOT NULL, reserved_at REAL NOT NULL, status TEXT NOT NULL, finished_at REAL, metadata TEXT NOT NULL DEFAULT '{}');
+CREATE INDEX IF NOT EXISTS request_time ON request_attempts(reserved_at);
+CREATE TABLE IF NOT EXISTS queue(id INTEGER PRIMARY KEY, guild_id TEXT NOT NULL, channel_id TEXT NOT NULL, author_id TEXT NOT NULL, branch_id TEXT NOT NULL, source_ids TEXT NOT NULL, priority INTEGER NOT NULL, status TEXT NOT NULL DEFAULT 'pending', created_at REAL NOT NULL, updated_at REAL NOT NULL, expires_at REAL NOT NULL, lease_until REAL, attempts INTEGER NOT NULL DEFAULT 0, reason TEXT NOT NULL DEFAULT '', response_message_id TEXT);
+CREATE INDEX IF NOT EXISTS queue_ready ON queue(status,priority,created_at);
+CREATE TABLE IF NOT EXISTS memory_preferences(guild_id TEXT NOT NULL, user_id TEXT NOT NULL, enabled INTEGER NOT NULL DEFAULT 1, generation INTEGER NOT NULL DEFAULT 0, PRIMARY KEY(guild_id,user_id));
+CREATE TABLE IF NOT EXISTS memories(id INTEGER PRIMARY KEY, scope TEXT NOT NULL, guild_id TEXT, user_id TEXT, kind TEXT NOT NULL, content TEXT NOT NULL, source_ids TEXT NOT NULL, source_type TEXT NOT NULL, confidence REAL NOT NULL, created_at REAL NOT NULL, updated_at REAL NOT NULL, expires_at REAL, status TEXT NOT NULL DEFAULT 'active', UNIQUE(scope,guild_id,user_id,kind,content));
+CREATE INDEX IF NOT EXISTS memory_owner ON memories(guild_id,user_id,status);
+CREATE TABLE IF NOT EXISTS feedback(message_id TEXT NOT NULL, user_id TEXT NOT NULL, emoji TEXT NOT NULL, active INTEGER NOT NULL, updated_at REAL NOT NULL, PRIMARY KEY(message_id,user_id,emoji));
+CREATE TABLE IF NOT EXISTS prompt_versions(id INTEGER PRIMARY KEY, text TEXT NOT NULL, hash TEXT NOT NULL, created_at REAL NOT NULL, status TEXT NOT NULL, evidence TEXT NOT NULL DEFAULT '{}');
+CREATE TABLE IF NOT EXISTS requests_log(request_id TEXT PRIMARY KEY, queue_id INTEGER, model TEXT NOT NULL, prompt_version INTEGER, prompt_hash TEXT, payload TEXT NOT NULL, response TEXT, error TEXT, created_at REAL NOT NULL, finished_at REAL);

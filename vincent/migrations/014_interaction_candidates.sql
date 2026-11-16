@@ -1,0 +1,1 @@
+ALTER TABLE memory_candidates ADD COLUMN interaction INTEGER NOT NULL DEFAULT 0;

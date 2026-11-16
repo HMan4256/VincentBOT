@@ -1,0 +1,1 @@
+CREATE TABLE IF NOT EXISTS provider_quota(id INTEGER PRIMARY KEY CHECK(id=1), observed_at REAL NOT NULL, remaining INTEGER NOT NULL, quota_limit INTEGER NOT NULL, used INTEGER);

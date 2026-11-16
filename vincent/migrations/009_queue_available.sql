@@ -1,0 +1,1 @@
+ALTER TABLE queue ADD COLUMN available_at REAL NOT NULL DEFAULT 0;

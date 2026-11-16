@@ -1,0 +1,232 @@
+[
+  {
+    "id": "ping",
+    "message": {
+      "message_id": "1",
+      "author_id": "2",
+      "created_at": 100,
+      "content": "hey",
+      "mentions": [
+        "9"
+      ]
+    },
+    "expected": "direct"
+  },
+  {
+    "id": "prefix",
+    "message": {
+      "message_id": "2",
+      "author_id": "2",
+      "created_at": 100,
+      "content": "!vin roast me"
+    },
+    "expected": "direct"
+  },
+  {
+    "id": "reply_bot",
+    "message": {
+      "message_id": "3",
+      "author_id": "2",
+      "created_at": 100,
+      "content": "nah",
+      "reply_to": "4"
+    },
+    "referenced": {
+      "author_id": "9"
+    },
+    "expected": "direct"
+  },
+  {
+    "id": "name",
+    "message": {
+      "message_id": "4",
+      "author_id": "2",
+      "created_at": 100,
+      "content": "vin what do you think"
+    },
+    "expected": "candidate"
+  },
+  {
+    "id": "name_not_substring",
+    "message": {
+      "message_id": "5",
+      "author_id": "2",
+      "created_at": 100,
+      "content": "i am convinced"
+    },
+    "expected": "ignore"
+  },
+  {
+    "id": "plain_followup",
+    "message": {
+      "message_id": "6",
+      "author_id": "2",
+      "created_at": 110,
+      "content": "unfortunately"
+    },
+    "recent_bot": {
+      "message_id": "7",
+      "target_user_id": "2",
+      "created_at": 100
+    },
+    "expected": "candidate"
+  },
+  {
+    "id": "different_user",
+    "message": {
+      "message_id": "8",
+      "author_id": "3",
+      "created_at": 110,
+      "content": "unfortunately"
+    },
+    "recent_bot": {
+      "message_id": "7",
+      "target_user_id": "2",
+      "created_at": 100
+    },
+    "expected": "ignore"
+  },
+  {
+    "id": "old_followup",
+    "message": {
+      "message_id": "9",
+      "author_id": "2",
+      "created_at": 200,
+      "content": "unfortunately"
+    },
+    "recent_bot": {
+      "message_id": "7",
+      "target_user_id": "2",
+      "created_at": 100
+    },
+    "expected": "ignore"
+  },
+  {
+    "id": "other_reply",
+    "message": {
+      "message_id": "10",
+      "author_id": "2",
+      "created_at": 110,
+      "content": "yes",
+      "reply_to": "5"
+    },
+    "referenced": {
+      "author_id": "3"
+    },
+    "recent_bot": {
+      "message_id": "7",
+      "target_user_id": "2",
+      "created_at": 100
+    },
+    "expected": "ignore"
+  },
+  {
+    "id": "active_branch",
+    "message": {
+      "message_id": "11",
+      "author_id": "2",
+      "created_at": 110,
+      "content": "yes",
+      "reply_to": "5"
+    },
+    "referenced": {
+      "author_id": "3"
+    },
+    "bot_ancestor": "7",
+    "expected": "candidate"
+  },
+  {
+    "id": "unrelated",
+    "message": {
+      "message_id": "12",
+      "author_id": "4",
+      "created_at": 110,
+      "content": "mara can you send the meeting link"
+    },
+    "expected": "ignore"
+  },
+  {
+    "id": "mention_while_replying_other",
+    "message": {
+      "message_id": "13",
+      "author_id": "4",
+      "created_at": 110,
+      "content": "vin what do you think",
+      "reply_to": "5",
+      "mentions": [
+        "9"
+      ]
+    },
+    "referenced": {
+      "author_id": "3"
+    },
+    "expected": "direct"
+  },
+  {
+    "id": "same_user_new_topic",
+    "message": {
+      "message_id": "14",
+      "author_id": "2",
+      "created_at": 110,
+      "content": "i will go make lunch"
+    },
+    "recent_bot": {
+      "message_id": "7",
+      "target_user_id": "2",
+      "created_at": 100,
+      "content": "that roast was brutal"
+    },
+    "expected": "candidate"
+  },
+  {
+    "id": "same_user_answers_question",
+    "message": {
+      "message_id": "15",
+      "author_id": "2",
+      "created_at": 110,
+      "content": "i play chess every weekend"
+    },
+    "recent_bot": {
+      "message_id": "7",
+      "target_user_id": "2",
+      "created_at": 100,
+      "content": "what do you do on weekends?"
+    },
+    "expected": "candidate"
+  },
+  {
+    "id": "same_user_tags_someone_else",
+    "message": {
+      "message_id": "16",
+      "author_id": "2",
+      "created_at": 110,
+      "content": "you ready?",
+      "mentions": [
+        "3"
+      ]
+    },
+    "recent_bot": {
+      "message_id": "7",
+      "target_user_id": "2",
+      "created_at": 100,
+      "content": "ok"
+    },
+    "expected": "candidate"
+  },
+  {
+    "id": "same_user_reuses_key_word",
+    "message": {
+      "message_id": "17",
+      "author_id": "2",
+      "created_at": 110,
+      "content": "the pizza was frozen"
+    },
+    "recent_bot": {
+      "message_id": "7",
+      "target_user_id": "2",
+      "created_at": 100,
+      "content": "your pizza looks suspicious"
+    },
+    "expected": "candidate"
+  }
+]

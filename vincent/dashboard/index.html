@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="dashboard-token" content="__TOKEN__">
+  <title>Vincent — Control room</title><link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-mark">V<span>.</span></div><div><strong>VINCENT</strong><small>CONTROL ROOM</small></div></div>
+      <div class="nav-label">WORKSPACE</div>
+      <nav>
+        <button class="nav-item active" data-view="overview"><span>◫</span> Overview</button>
+        <button class="nav-item" data-view="activity"><span>≡</span> Activity <i id="nav-events"></i></button>
+        <button class="nav-item" data-view="memory"><span>◈</span> Memory <i id="nav-memory"></i></button>
+        <button class="nav-item" data-view="guidance"><span>✳</span> Guidance</button>
+      </nav>
+      <div class="sidebar-bottom"><span class="tiny-dot"></span> LOCAL DASHBOARD<br><small>Private to this machine</small></div>
+    </aside>
+    <main>
+      <header><div class="breadcrumb">VINCENT <span>/</span> <b id="crumb">OVERVIEW</b></div><div class="header-right"><span id="updated">Connecting…</span><button id="refresh" class="icon-button" title="Refresh">↻</button></div></header>
+      <div class="content">
+        <div id="error" class="error" hidden></div>
+        <section id="overview" class="view active">
+          <div class="page-head"><div><div class="eyebrow">YOUR BOT, AT A GLANCE</div><h1>Overview<span>.</span></h1><p>A little window into what Vincent’s up to.</p></div><div class="bot-controls"><div id="bot-status" class="status"><span class="status-dot"></span> Checking</div><button id="bot-action" class="button secondary" hidden></button></div></div>
+          <div class="stats">
+            <article class="stat"><div class="stat-label">DAILY REQUESTS <span>↗</span></div><div class="stat-number" id="requests-count">—</div><div class="stat-foot" id="requests-foot">Local usage</div><div class="meter"><div id="request-meter"></div></div></article>
+            <article class="stat"><div class="stat-label">MEMORIES <span>◈</span></div><div class="stat-number" id="memory-count">—</div><div class="stat-foot">Active, across all scopes</div></article>
+            <article class="stat"><div class="stat-label">IN THE QUEUE <span>◷</span></div><div class="stat-number" id="queue-count">—</div><div class="stat-foot" id="queue-foot">Pending or generating</div></article>
+            <article class="stat"><div class="stat-label">REACTIONS <span>♡</span></div><div class="stat-number" id="reaction-count">—</div><div class="stat-foot" id="reaction-foot">Member ratings</div></article>
+          </div>
+          <div class="columns"><div class="stack"><div class="panel"><div class="panel-head"><div><div class="eyebrow">THE LATEST</div><h2>Recent activity</h2></div><button class="text-button" data-go="activity">View all ↗</button></div><div id="recent-list" class="activity-list"></div></div></div>
+            <div class="stack"><div class="panel"><div class="panel-head"><div><div class="eyebrow">CONFIGURATION</div><h2>Channel controls</h2></div><span class="soft-tag">LIVE</span></div><p class="panel-note">Changes apply while Vincent is running.</p><div id="channels"></div></div>
+              <div class="panel model-panel"><div class="eyebrow">CURRENT MODEL</div><div class="model-name" id="model-name">—</div><div class="model-foot"><span class="tiny-dot"></span> OPENROUTER <span> / </span> <span id="model-quota">—</span></div></div></div></div>
+        </section>
+        <section id="activity" class="view"><div class="page-head"><div><div class="eyebrow">WHAT HAPPENED</div><h1>Activity<span>.</span></h1><p>Recent events, model requests and queue items.</p></div></div><div class="panel"><div class="tabs"><button class="tab active" data-log="events">Events</button><button class="tab" data-log="requests">Requests</button><button class="tab" data-log="queue">Queue</button><button class="tab" data-log="console">Console</button></div><div id="activity-list"></div></div></section>
+        <section id="memory" class="view"><div class="page-head"><div><div class="eyebrow">WHAT VINCENT KNOWS</div><h1>Memory<span>.</span></h1><p>Browse the latest 300 memories and 100 profiles.</p></div><button id="add-memory" class="button">+ Add shared memory</button></div><div class="panel"><div class="toolbar"><div class="tabs"><button class="tab active" data-memory="all">All</button><button class="tab" data-memory="user">Users</button><button class="tab" data-memory="server">Server</button><button class="tab" data-memory="global">Global</button><button class="tab" data-memory="profiles">Profiles</button></div><input id="memory-search" type="search" placeholder="Search memories…"></div><div id="memory-list"></div></div></section>
+        <section id="guidance" class="view"><div class="page-head"><div><div class="eyebrow">HOW HE LEARNS</div><h1>Guidance<span>.</span></h1><p>Review learned guidance and choose the active version.</p></div></div><div class="notice">The core personality stays separate. Activating a proposal is a manual override; review it first.</div><div id="guidance-list" class="guidance-grid"></div></section>
+        <footer>VINCENT CONTROL ROOM <span>·</span> MADE FOR THE CHAOS</footer>
+      </div>
+    </main>
+  </div>
+  <dialog id="memory-dialog"><form id="memory-form"><div class="eyebrow">GIVE HIM SOMETHING TO REMEMBER</div><h2>Add a memory<span>.</span></h2><label>Scope<select name="scope" id="memory-scope"><option value="global">Global</option><option value="server">Server</option></select></label><label id="guild-field" hidden>Server ID<input name="guild" placeholder="Discord server ID"></label><label>Memory<textarea name="content" rows="4" maxlength="300" minlength="3" required placeholder="What should Vincent remember?"></textarea></label><div class="dialog-actions"><button type="button" class="button secondary" id="close-dialog">Cancel</button><button class="button" type="submit">Save memory</button></div></form></dialog>
+</body></html>

@@ -1,0 +1,2 @@
+ALTER TABLE queue ADD COLUMN send_nonce TEXT;
+ALTER TABLE queue ADD COLUMN send_text TEXT;
